@@ -1,15 +1,19 @@
 <template>
   <div id="app">
     <h1>Welcome to Chat room</h1>
-
+    <Chat />
   </div>
 </template>
 
 <script>
+  import Chat from './components/Chat';
 
-export default {
-  name: 'app',
-}
+  export default {
+    name: 'app',
+    components: {
+      Chat
+    }
+  }
 </script>
 
 <style>
