@@ -21,7 +21,7 @@
 <script>
     import axios from 'axios';
 
-    import Message from '../components/Message';
+    import Message from '../components/Message.vue';
 
     export default {
         name: 'Chat',
@@ -45,7 +45,7 @@
             }
         },
         mounted() {
-            axios.post('push.php')
+            axios.post('push')
                 .then(res => {
                     console.log(res);
                 })
