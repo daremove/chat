@@ -2,7 +2,7 @@
     <div class="message">
         <div class="message__inner">
             <div class="message__inner-row">
-                <span class="message__nickname">
+                <span class="message__nickname" :style="message.style">
                     {{ message.nickname }}
                 </span>
                 <span class="message__date">
@@ -45,22 +45,22 @@
     .message__inner-row {
         display: flex;
         align-items: center;
-        margin-bottom: 5px;
     }
 
     .message__nickname {
         margin-right: 10px;
 
-        font-size: 14px;
+        color: #42648b;
+        font-size: 13px;
+        font-weight: 700;
     }
 
     .message__date {
         font-size: 12px;
-        font-weight: bold;
+        color: hsla(220,8%,51%,.6);
     }
 
     .message__text {
-        font-size: 14px;
-        font-style: italic;
+        font-size: 13px;
     }
 </style>

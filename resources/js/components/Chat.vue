@@ -1,18 +1,27 @@
 <template>
     <div class="chat">
-        <div class="chat__view">
+        <transition-group
+                name="fade"
+                class="chat__view"
+                tag="div">
             <Message
                     v-for="(message, index) in messages"
                     :key="index"
                     :message="message"
             />
-        </div>
+        </transition-group>
+
         <div class="chat__actions">
+            <Settings
+                    :user="user"
+                    @save-user="handleSaveUser"
+            />
+
             <textarea
                     name="message"
                     class="chat__actions-input"
                     @keypress.enter="handleMessageSubmit"
-                    v-model.trim="message"
+                    v-model="message"
             ></textarea>
         </div>
     </div>
@@ -21,6 +30,7 @@
 <script>
     import axios from 'axios';
 
+    import Settings from './Settings.vue';
     import Message from './Message.vue';
 
     export default {
@@ -28,16 +38,26 @@
         data() {
             return {
                 message: '',
-                messages: []
+                messages: [],
+                user: {
+                    isAuthorized: false,
+                    nickname: 'anonymous',
+                    style: {color: 'black'}
+                }
             }
         },
-        components: { Message },
+        components: { Message, Settings },
         methods: {
+            handleSaveUser(user) {
+                this.user.nickname = user.nickname;
+                this.user.style = {color: user.style};
+            },
             handleMessageSubmit() {
                 if (!this.message) return;
 
                 this.messages.push({
-                    nickname: 'anonymous',
+                    nickname: this.user.nickname,
+                    style: this.user.style,
                     text: this.message
                 });
 
@@ -57,6 +77,15 @@
 </script>
 
 <style lang="scss">
+    .fade-enter,
+    .fade-leave-to {
+        opacity: 0;
+    }
+    .fade-enter-active,
+    .fade-leave-active {
+        transition: opacity 0.3s;
+    }
+
     .chat {
         width: 600px;
         height: 400px;
@@ -74,8 +103,11 @@
     }
 
     .chat__actions {
+        position: relative;
+
         display: flex;
-        padding: 20px 10px;
+        flex-direction: column;
+        padding: 0 10px 20px;
         justify-content: center;
         align-items: center;
         width: 100%;

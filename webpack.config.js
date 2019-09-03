@@ -108,8 +108,8 @@ module.exports = {
                     loader: 'file-loader',
                     options: {
                         name: '[name].[ext]',
-                        outputPath: '/img/',
-                        publicPath: '../img/',
+                        outputPath: '/public/img/',
+                        publicPath: './img/',
                     }
                 }]
             }

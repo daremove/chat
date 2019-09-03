@@ -10,6 +10,6 @@ $router->get('/', function() use ($mainPage) {
     return $mainPage;
 });
 
-$router->post('/push', function() {
-    echo 'hello world';
+$router->post('/push', function($request) {
+    echo json_encode($request);
 });
