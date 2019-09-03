@@ -21,7 +21,7 @@
 <script>
     import axios from 'axios';
 
-    import Message from '../components/Message.vue';
+    import Message from './Message.vue';
 
     export default {
         name: 'Chat',

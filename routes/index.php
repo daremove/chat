@@ -4,8 +4,12 @@ include_once 'Request.php';
 include_once 'Router.php';
 $router = new Router(new Request);
 
-$router->get('/', function() {
-    return <<<HTML
-  <h1>Hello world</h1>
-HTML;
+$mainPage = file_get_contents('../resources/views/index.html');
+
+$router->get('/', function() use ($mainPage) {
+    return $mainPage;
+});
+
+$router->post('/push', function() {
+    echo 'hello world';
 });
