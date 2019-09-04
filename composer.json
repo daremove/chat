@@ -1,0 +1,12 @@
+{
+    "name": "1197726/chat",
+    "authors": [
+        {
+            "name": "neHb",
+            "email": "sasha-bakunin@mail.ru"
+        }
+    ],
+    "require": {
+        "cboden/ratchet": "^0.4.1"
+    }
+}
