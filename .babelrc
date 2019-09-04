@@ -6,7 +6,8 @@
         "useBuiltIns": "entry",
         "targets": {
           "browsers": ["last 2 versions", "ie 11"]
-        }
+        },
+        "corejs": "2"
       }
     ]
   ]

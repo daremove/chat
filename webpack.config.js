@@ -55,9 +55,6 @@ module.exports = {
                     {
                         loader: 'postcss-loader',
                         options: {
-                            plugins: () => [require('autoprefixer')({
-                                'browsers': ['> 1%', 'last 2 versions']
-                            })],
                             sourceMap: true
                         }
                     },
@@ -77,9 +74,6 @@ module.exports = {
                     {
                         loader: 'postcss-loader',
                         options: {
-                            plugins: () => [require('autoprefixer')({
-                                'browsers': ['> 1%', 'last 2 versions']
-                            })],
                             sourceMap: true
                         }
                     },
