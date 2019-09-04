@@ -1,12 +1,10 @@
 {
-    "name": "1197726/chat",
-    "authors": [
-        {
-            "name": "neHb",
-            "email": "sasha-bakunin@mail.ru"
+    "autoload": {
+        "psr-0": {
+            "MyApp\\": "src"
         }
-    ],
+    },
     "require": {
-        "cboden/ratchet": "^0.4.1"
+        "cboden/ratchet": "^0.4"
     }
 }

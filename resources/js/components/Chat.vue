@@ -49,17 +49,40 @@
           isAuthorized: false,
           nickname: 'anonymous',
           style: {color: '#000'}
-        }
+        },
+        connect: null
       }
     },
     mounted() {
-      axios.post('push')
-        .then(res => {
-          console.log(res);
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      // axios.post('push')
+      //   .then(res => {
+      //     console.log(res);
+      //   })
+      //   .catch(err => {
+      //     console.log(err);
+      //   });
+      this.connect = new WebSocket('ws://localhost:8080');
+
+      this.connect.onopen = function() {
+        alert("Соединение установлено.");
+      };
+
+      this.connect.onclose = function(event) {
+        if (event.wasClean) {
+          alert('Соединение закрыто чисто');
+        } else {
+          alert('Обрыв соединения'); // например, "убит" процесс сервера
+        }
+        alert('Код: ' + event.code + ' причина: ' + event.reason);
+      };
+
+      this.connect.onmessage = function(event) {
+        alert("Получены данные " + event.data);
+      };
+
+      this.connect.onerror = function(error) {
+        alert("Ошибка " + error.message);
+      };
     },
     methods: {
       handleSaveUser(user) {
@@ -69,12 +92,14 @@
       handleMessageSubmit() {
         if (!this.message) return;
 
-        this.messages.push({
+        const data = {
           nickname: this.user.nickname,
           style: this.user.style,
           text: this.message
-        });
+        };
 
+        this.messages.push(data);
+        this.connect.send(JSON.stringify(data));
         this.message = '';
 
         this.$nextTick(() => {
