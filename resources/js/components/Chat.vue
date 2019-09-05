@@ -61,7 +61,7 @@
       //   .catch(err => {
       //     console.log(err);
       //   });
-      this.connect = new WebSocket('ws://localhost:8080');
+      this.connect = new WebSocket('ws://192.168.1.5:8080');
 
       this.connect.onopen = function() {
         alert("Соединение установлено.");
