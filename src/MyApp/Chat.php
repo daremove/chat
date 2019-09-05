@@ -2,11 +2,13 @@
 namespace MyApp;
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
+use MyApp\ChatSQL;
 
 class Chat implements MessageComponentInterface {
     protected $clients;
-
+    protected $sql;
     public function __construct() {
+        $this->sql = new ChatSQL();
         $this->clients = new \SplObjectStorage;
     }
 
@@ -14,8 +16,9 @@ class Chat implements MessageComponentInterface {
         // Store the new connection to send messages to later
         $this->clients->attach($conn);
 
-        $conn->send('hello');
         echo "New connection! ({$conn->resourceId})\n";
+        $data = $this->sql->createUser($conn->remoteAddress);
+        $conn->send(json_encode($data));
     }
 
     public function onMessage(ConnectionInterface $from, $msg) {
