@@ -7,7 +7,7 @@ namespace MyApp;
 class ChatSQL
 {
     protected $link;
-    protected $host = '192.168.1.5';
+    protected $host = '192.168.1.8';
     protected $user = 'root';
     protected $password = '';
 

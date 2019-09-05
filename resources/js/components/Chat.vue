@@ -47,6 +47,7 @@
         messages: [],
         user: {
           isAuthorized: false,
+          ip: null,
           nickname: 'anonymous',
           style: {color: '#000'}
         },
@@ -61,9 +62,9 @@
       //   .catch(err => {
       //     console.log(err);
       //   });
-      this.connect = new WebSocket('ws://192.168.1.5:8080');
+      this.connect = new WebSocket('ws://192.168.1.8:8080');
 
-      this.connect.onopen = function() {
+      this.connect.onopen = function(e) {
         alert("Соединение установлено.");
       };
 
@@ -76,8 +77,8 @@
         alert('Код: ' + event.code + ' причина: ' + event.reason);
       };
 
-      this.connect.onmessage = function(event) {
-        console.log(event.data);
+      this.connect.onmessage = event => {
+        this.handleGetMessage(event.data);
       };
 
       this.connect.onerror = function(error) {
@@ -94,18 +95,37 @@
 
         const data = {
           nickname: this.user.nickname,
-          style: this.user.style,
-          text: this.message
+          color: this.user.style.color,
+          text: this.message,
+          date: this.getDateCreated()
         };
 
-        this.messages.push(data);
         this.connect.send(JSON.stringify(data));
         this.message = '';
-
+        this.messages.push(data);
         this.$nextTick(() => {
-
           this.$refs.view.$el.scrollTop = this.$refs.view.$el.scrollHeight;
         });
+      },
+      handleGetMessage(data) {
+        const parseData = JSON.parse(data);
+
+        if (parseData.hasOwnProperty('ip')) {
+          this.user.ip = parseData.ip;
+        } else {
+          this.messages.push(parseData);
+          this.$nextTick(() => {
+            this.$refs.view.$el.scrollTop = this.$refs.view.$el.scrollHeight;
+          });
+        }
+      },
+      getDateCreated() {
+        const date = new Date();
+        const hours = date.getHours() > 9 ? date.getHours() : `0${date.getHours()}`;
+        const minutes = date.getMinutes() > 9 ? date.getMinutes() : `0${date.getMinutes()}`;
+        const seconds = date.getSeconds() > 9 ? date.getSeconds() : `0${date.getSeconds()}`;
+
+        return `${hours}:${minutes}:${seconds}`;
       }
     }
   }

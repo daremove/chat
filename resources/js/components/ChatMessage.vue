@@ -9,7 +9,7 @@
           {{ message.nickname }}
         </span>
         <span class="message__date">
-          {{ getDateCreated }}
+          {{ message.date }}
         </span>
       </div>
       <span class="message__text">
@@ -26,16 +26,6 @@
       message: {
         type: Object,
         default: () => {}
-      }
-    },
-    computed: {
-      getDateCreated() {
-        const date = new Date();
-        const hours = date.getHours() > 9 ? date.getHours() : `0${date.getHours()}`;
-        const minutes = date.getMinutes() > 9 ? date.getMinutes() : `0${date.getMinutes()}`;
-        const seconds = date.getSeconds() > 9 ? date.getSeconds() : `0${date.getSeconds()}`;
-
-        return `${hours}:${minutes}:${seconds}`;
       }
     }
   }
