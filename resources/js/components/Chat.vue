@@ -77,7 +77,7 @@
       };
 
       this.connect.onmessage = function(event) {
-        alert("Получены данные " + event.data);
+        console.log(event.data);
       };
 
       this.connect.onerror = function(error) {

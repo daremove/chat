@@ -2,14 +2,14 @@
 namespace MyApp;
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
-use MyApp\ChatSQL;
 
 class Chat implements MessageComponentInterface {
     protected $clients;
     protected $sql;
+
     public function __construct() {
-        $this->sql = new ChatSQL();
         $this->clients = new \SplObjectStorage;
+        $this->sql = new ChatSQL();
     }
 
     public function onOpen(ConnectionInterface $conn) {
