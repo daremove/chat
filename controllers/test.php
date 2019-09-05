@@ -1,18 +1,30 @@
 <?php
-$link = mysqli_connect('127.0.0.1', "root", '', 'users');
-if ( !$link ) die("Error");
+$host = 'localhost';
+$user = 'root';
+$password = '';
 
-$query ="SELECT * FROM phones";
-$result = mysqli_query($link, $query) or die("Ошибка " . mysqli_error($link));
-if($result)
-{
-    echo "Выполнение запроса прошло успешно";
+$link = mysqli_connect($host, $user, $password);
+
+if (!$link) {
+    die(mysqli_error($link));
 }
-$query1 = "INSERT INTO gamers (login, password) VALUE ('allah', 'akbar')";
 
-if(mysqli_query($link, $query1))
-    echo " xyN";
-else
-    echo " sd";
-mysqli_close($link);
-?>
+mysqli_query($link, "SET NAMES 'utf8'") or die(mysqli_error($link));
+mysqli_query($link, "CREATE DATABASE IF NOT EXISTS chat;") or die(mysqli_error($link));
+mysqli_query($link, "USE chat;") or die(mysqli_error($link));
+mysqli_query($link, "CREATE TABLE IF NOT EXISTS users (
+    ip VARCHAR(45) UNIQUE,
+    name VARCHAR(100),
+    color VARCHAR(7),
+    PRIMARY KEY(ip)
+)") or die(mysqli_error($link));
+
+mysqli_query($link, "CREATE TABLE IF NOT EXISTS messages (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    ip VARCHAR(45),
+    name VARCHAR(100),
+    color VARCHAR(7),
+    text VARCHAR(300),
+    date VARCHAR(10),
+    FOREIGN KEY (ip) REFERENCES users (ip) ON DELETE CASCADE
+)") or die(mysqli_error($link));
